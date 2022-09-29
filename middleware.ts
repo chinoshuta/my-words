@@ -32,11 +32,12 @@ export default function middleware(req: NextRequest) {
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
       ? hostname
+          .replace("*.vercel.app", "")
           .replace(`.vercel.pub`, "")
           .replace(`.platformize.vercel.app`, "")
       : hostname.replace(`.localhost:3000`, "");
   // rewrites for app pages
-  if (currentHost == "app") {
+  if (currentHost == "app" || currentHost == "my-words.vercel.app") {
     if (
       url.pathname === "/login" &&
       (req.cookies.get("next-auth.session-token") ||
