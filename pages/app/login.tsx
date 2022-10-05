@@ -52,28 +52,9 @@ export default function Login() {
         <meta name="twitter:image" content={logo} />
       </Head>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="relative mx-auto h-12 w-auto">
-          <Image
-            alt="Platforms Starter Kit"
-            layout="fill"
-            objectFit="contain"
-            src="/logo.png"
-          />
-        </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Platforms Starter Kit
+        <h2 className="mt-6 text-center text-5xl font-extrabold text-gray-900">
+          My Words
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Build multi-tenant applications with custom domains. <br /> Read the{" "}
-          <a
-            className="font-medium text-black hover:text-gray-800"
-            href="https://demo.vercel.pub/platforms-starter-kit"
-            rel="noreferrer"
-            target="_blank"
-          >
-            blog post
-          </a>
-        </p>
       </div>
 
       <div className="mt-8 mx-auto sm:w-full w-11/12 sm:max-w-md">
@@ -86,7 +67,7 @@ export default function Login() {
             }}
             className={`${
               loading ? "cursor-not-allowed bg-gray-600" : "bg-black"
-            } group flex justify-center items-center space-x-5 w-full sm:px-4 h-16 my-2 rounded-md focus:outline-none`}
+            } group flex justify-center items-center space-x-5 w-full sm:px-4 h-14 my-2 rounded-md focus:outline-none`}
           >
             {loading ? (
               <LoadingDots color="#fff" />

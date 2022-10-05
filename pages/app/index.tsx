@@ -156,12 +156,11 @@ export default function AppIndex() {
 
       <div className="py-20 max-w-screen-xl mx-auto px-10 sm:px-20">
         <div className="flex flex-col sm:flex-row space-y-5 sm:space-y-0 justify-between items-center">
-          <h1 className="font-cal text-5xl">My Sites</h1>
           <button
             onClick={() => setShowModal(true)}
-            className="font-cal text-lg w-3/4 sm:w-40 tracking-wide text-white bg-black border-black border-2 px-5 py-3 hover:bg-white hover:text-black transition-all ease-in-out duration-150"
+            className="ml-auto font-cal text-lg w-3/4 sm:w-40 tracking-wide text-white bg-black border-black border-2 px-5 py-3 hover:bg-white hover:text-black transition-all ease-in-out duration-150"
           >
-            New Site <span className="ml-2">＋</span>
+            単語帳を追加
           </button>
         </div>
         <div className="my-10 grid gap-y-10">
@@ -170,35 +169,12 @@ export default function AppIndex() {
               sites.map((site) => (
                 <Link href={`/site/${site.id}`} key={site.id}>
                   <a>
-                    <div className="flex flex-col md:flex-row md:h-60 rounded-lg overflow-hidden border border-gray-200">
-                      <div className="relative w-full h-60 md:h-auto md:w-1/3 md:flex-none">
-                        {site.image ? (
-                          <BlurImage
-                            src={site.image}
-                            layout="fill"
-                            objectFit="cover"
-                            alt={site.name ?? "Site thumbnail"}
-                          />
-                        ) : (
-                          <div className="absolute flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-4xl select-none">
-                            ?
-                          </div>
-                        )}
-                      </div>
+                    <div className="flex flex-col md:flex-row md:h-30 rounded-lg overflow-hidden border border-gray-200">
                       <div className="relative p-10">
                         <h2 className="font-cal text-3xl">{site.name}</h2>
                         <p className="text-base my-5 line-clamp-3">
                           {site.description}
                         </p>
-                        <a
-                          className="font-cal px-3 py-1 tracking-wide rounded bg-gray-200 text-gray-600 absolute bottom-5 left-10 whitespace-nowrap"
-                          href={`https://${site.subdomain}.vercel.pub`}
-                          onClick={(e) => e.stopPropagation()}
-                          rel="noreferrer"
-                          target="_blank"
-                        >
-                          {site.subdomain}.vercel.pub ↗
-                        </a>
                       </div>
                     </div>
                   </a>
@@ -217,7 +193,7 @@ export default function AppIndex() {
                 </div>
                 <div className="text-center">
                   <p className="text-2xl font-cal text-gray-600">
-                    No sites yet. Click &quot;New Site&quot; to create one.
+                    単語帳が存在しません。新しく単語帳を作成しましょう！
                   </p>
                 </div>
               </>
