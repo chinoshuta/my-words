@@ -1,0 +1,11 @@
+.modal {
+  :global(.MuiPaper-root) {
+    min-width: 650px !important;
+  }
+}
+
+.innerFrom {
+  width: 100%;
+  padding: 30px 30px 0;
+  text-align: center;
+}
