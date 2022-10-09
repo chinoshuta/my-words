@@ -32,11 +32,9 @@ const IndexPage = () => {
             {book?.length > 0 ? (
               book.map((book) => (
                 <Link href={`/book/${book.id}`} key={book.id}>
-                  <a>
-                    <div className={styles.book}>
-                      <h2 className="font-cal text-3xl">{book.name}</h2>
-                    </div>
-                  </a>
+                  <div className={styles.book}>
+                    <h2 className="font-cal text-3xl">{book.name}</h2>
+                  </div>
                 </Link>
               ))
             ) : (
