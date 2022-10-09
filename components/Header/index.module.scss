@@ -1,0 +1,18 @@
+.wrapper {
+  position: sticky;
+  top: 0;
+  height: 64px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgb(229 231 235);
+  font-size: 22px;
+  font-weight: bold;
+  z-index: 99;
+
+  button {
+    position: absolute;
+    right: 30px;
+  }
+}

@@ -1,0 +1,18 @@
+.word {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  height: 80px;
+  border: 1px solid #000000;
+  padding: 0 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.delete {
+  margin-left: auto;
+  cursor: pointer;
+}

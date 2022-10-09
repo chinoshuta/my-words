@@ -67,15 +67,6 @@ export async function createWord(
   }
 }
 
-/**
- * Delete Post
- *
- * Deletes a post from the database using a provided `postId` query
- * parameter.
- *
- * @param req - Next.js API Request
- * @param res - Next.js API Response
- */
 export async function deleteWord(
   req: NextApiRequest,
   res: NextApiResponse

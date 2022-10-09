@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import LoadingDots from "@/components/app/loading-dots";
 import styles from "./index.module.scss";
+import { useSWRConfig } from "swr";
 
 type Props = {
   isOpen: boolean;
@@ -12,7 +13,6 @@ type Props = {
 };
 type Form = {
   name: string;
-  description: string;
 };
 
 const AddBookModal: React.FC<Props> = ({ isOpen, onClose }) => {
@@ -25,6 +25,7 @@ const AddBookModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const { data: session } = useSession();
   const sessionId = session?.user?.id;
   const [isSubmiting, setIsSubmiting] = useState(false);
+  const { mutate } = useSWRConfig();
 
   const onSubmit: SubmitHandler<Form> = async (data, e) => {
     e?.preventDefault();
@@ -37,10 +38,10 @@ const AddBookModal: React.FC<Props> = ({ isOpen, onClose }) => {
       body: JSON.stringify({
         userId: sessionId,
         name: data.name,
-        description: data.description,
       }),
     });
     setIsSubmiting(false);
+    mutate("/api/book");
     onClose();
   };
 
@@ -62,14 +63,6 @@ const AddBookModal: React.FC<Props> = ({ isOpen, onClose }) => {
               placeholder="名前"
               {...register("name", { required: true })}
               type="text"
-            />
-          </div>
-          <div className="border border-gray-700">
-            <textarea
-              className="w-full px-5 py-3 text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-r-lg placeholder-gray-400"
-              placeholder="説明"
-              {...register("description", { required: true })}
-              rows={3}
             />
           </div>
         </div>

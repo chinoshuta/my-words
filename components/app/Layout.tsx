@@ -6,28 +6,23 @@ import React from "react";
 import { signOut } from "next-auth/react";
 import Loader from "./Loader";
 import useRequireAuth from "../../lib/useRequireAuth";
+import Header from "../Header";
 
 import type { WithChildren } from "@/types";
+import { CircularProgress } from "@mui/material";
 
 interface LayoutProps extends WithChildren {
   siteId?: string;
 }
 
 export default function Layout({ siteId, children }: LayoutProps) {
-  const title = "Platforms on Vercel";
+  const title = "My Words";
   const description =
     "Create a fullstack application with multi-tenancy and custom domains support using Next.js, Prisma, and PostgreSQL";
   const logo = "/favicon.ico";
-  const router = useRouter();
-  const sitePage = router.pathname.startsWith("/app/site/[id]");
-  const postPage = router.pathname.startsWith("/app/post/[id]");
-  const rootPage = !sitePage && !postPage;
-  const tab = rootPage
-    ? router.asPath.split("/")[1]
-    : router.asPath.split("/")[3];
 
   const session = useRequireAuth();
-  if (!session) return <Loader />;
+  if (!session) return <CircularProgress />;
 
   return (
     <>
@@ -58,38 +53,9 @@ export default function Layout({ siteId, children }: LayoutProps) {
           <meta name="twitter:description" content={description} />
           <meta name="twitter:image" content={logo} />
         </Head>
-        <div className="absolute left-0 right-0 h-16 border-b bg-white border-gray-200">
-          <div className="flex justify-between items-center h-full max-w-screen-xl mx-auto px-10 sm:px-20">
-            <div className="flex space-x-4">
-              <Link href="/">
-                <a className="flex justify-center items-center">
-                  {session.user && session.user.image && (
-                    <div className="h-8 w-8 inline-block rounded-full overflow-hidden align-middle">
-                      <Image
-                        src={session.user.image}
-                        width={40}
-                        height={40}
-                        alt={session.user.name ?? "User avatar"}
-                      />
-                    </div>
-                  )}
-                  <span className="sm:block inline-block ml-3 font-medium truncate">
-                    {session.user?.name}
-                  </span>
-                </a>
-              </Link>
-              <div className="h-8 border border-gray-300" />
-              <button
-                className="text-gray-500 hover:text-gray-700 transition-all ease-in-out duration-150"
-                onClick={() => signOut()}
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
+        <Header />
 
-        <div className="pt-10">{children}</div>
+        <div className="p-6">{children}</div>
       </div>
     </>
   );
