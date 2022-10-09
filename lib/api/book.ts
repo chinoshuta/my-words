@@ -46,6 +46,9 @@ export async function getBook(
       where: {
         userId: session.user.id,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return res.status(200).json(books);
