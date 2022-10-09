@@ -12,6 +12,18 @@
   background: #000000;
   color: #ffffff;
   transition: 0.2s;
+}
+
+.questionButton {
+  display: block;
+  padding: 12px;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 500px;
+  margin: 30px auto 0;
+  background: #ffffff;
+  border: 1px solid #000000;
+  transition: 0.2s;
   &:hover {
     opacity: 0.7;
   }

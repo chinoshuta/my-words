@@ -113,13 +113,21 @@ export default function SiteIndex() {
               disabled={isSubmiting || !isValid}
               className={clsx(
                 styles.submitButton,
-                (isSubmiting || !isValid) && "opacity-70"
+                isSubmiting || !isValid ? "opacity-30" : "hover:opacity-70"
               )}
             >
               {isSubmiting ? <LoadingDots /> : "追加"}
             </button>
           </form>
-
+          {data.words?.length > 0 && (
+            <button
+              type="button"
+              onClick={() => router.push(`/book/${bookId}/question`)}
+              className={clsx(styles.questionButton)}
+            >
+              出題
+            </button>
+          )}
           <div className={styles.wrapper}>
             {data.words?.length > 0 ? (
               data.words.map(

@@ -95,15 +95,15 @@ export async function updateWord(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void | NextApiResponse<Word>> {
-  const { word, meaning, wordId } = req.body;
+  const { wordId, answers, correct } = req.body;
   try {
     const post = await prisma.word.update({
       where: {
         id: wordId,
       },
       data: {
-        word,
-        meaning,
+        answers,
+        correct,
       },
     });
     return res.status(200).json(post);

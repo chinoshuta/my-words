@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import styles from "./login.module.scss";
-import clsx from "clsx";
 import { CircularProgress } from "@mui/material";
 
 const pageTitle = "My Words";
@@ -56,21 +55,38 @@ export default function Login() {
       <div className={styles.container}>
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-5xl font-extrabold text-gray-900">
-            My Words
+            My Words!
           </h2>
         </div>
 
-        <button
-          disabled={loading}
-          onClick={() => {
-            setLoading(true);
-            signIn("github");
-          }}
-          className={clsx(styles.button)}
-        >
-          <img src="/github-icon.png" alt="github" className={styles.icon} />
-          <span className="font-bold">GitHub</span>でログイン
-        </button>
+        <div className={styles.buttonWrapper}>
+          <button
+            disabled={loading}
+            onClick={() => {
+              setLoading(true);
+              signIn("twitter");
+            }}
+            className={styles.button}
+          >
+            <img
+              src="/twitter-icon.png"
+              alt="twitter"
+              className={styles.icon}
+            />
+            <span className="font-bold">Twitter</span>でログイン
+          </button>
+          <button
+            disabled={loading}
+            onClick={() => {
+              setLoading(true);
+              signIn("github");
+            }}
+            className={styles.button}
+          >
+            <img src="/github-icon.png" alt="github" className={styles.icon} />
+            <span className="font-bold">GitHub</span>でログイン
+          </button>
+        </div>
       </div>
       <Toaster />
     </>

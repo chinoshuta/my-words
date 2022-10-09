@@ -1,5 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
+import TwitterProvider from "next-auth/providers/twitter";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 
@@ -20,6 +21,11 @@ export const authOptions: NextAuthOptions = {
           image: profile.avatar_url,
         };
       },
+    }),
+    TwitterProvider({
+      clientId: "OGQ1NU9YM0RQZHB0N3h6bHZ1Rzk6MTpjaQ",
+      clientSecret: "rs3eA3poKWipCj7YY4LX6PPNztD5gI4IGowT5kbww8CRL9SMKK",
+      version: "2.0",
     }),
   ],
   pages: {
