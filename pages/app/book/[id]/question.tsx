@@ -5,7 +5,7 @@ import { CircularProgress } from "@mui/material";
 import { Word } from "@prisma/client";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import styles from "./question.module.scss";
 
@@ -17,6 +17,7 @@ const QuestionPage = () => {
   const [index, setIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isMeaning, setIsMeaning] = useState<boolean>(false);
+  const [currentWord, setCurrentWord] = useState<Word>();
   const router = useRouter();
   const { id: bookId } = router.query;
   const { data } = useSWR<Data>(
@@ -36,9 +37,13 @@ const QuestionPage = () => {
       })
     : [];
 
+  useEffect(() => {
+    if (words?.length) setCurrentWord(words[0]);
+  }, [words]);
+
   const onNext = () => {
-    console.log(words);
     setIsMeaning(false);
+    setCurrentWord(words[index + 1]);
     setIndex((prev) => prev + 1);
   };
 
@@ -85,7 +90,7 @@ const QuestionPage = () => {
           </p>
           {isMeaning ? (
             <>
-              <p className={styles.word}>{words[index]?.meaning}</p>
+              <p className={styles.word}>{currentWord?.meaning}</p>
               <div className={clsx(styles.buttonWrapper, "flex-col")}>
                 {words?.length && index + 1 < words.length ? (
                   <div className={styles.button} onClick={onNext}>
@@ -109,7 +114,7 @@ const QuestionPage = () => {
             </>
           ) : (
             <>
-              <p className={styles.word}>{words[index]?.word}</p>
+              <p className={styles.word}>{currentWord?.word}</p>
               <div className={styles.buttonWrapper}>
                 <div className={styles.button} onClick={() => onCorrect()}>
                   わかった
@@ -118,7 +123,6 @@ const QuestionPage = () => {
                   わからない
                 </div>
               </div>
-              {words.map((n) => `${n.word},${n.meaning}`)}
             </>
           )}
         </div>
