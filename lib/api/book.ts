@@ -121,20 +121,11 @@ export async function deleteBook(
       .end("Bad request. siteId parameter cannot be an array.");
 
   try {
-    await prisma.$transaction([
-      prisma.post.deleteMany({
-        where: {
-          site: {
-            id: bookId,
-          },
-        },
-      }),
-      prisma.site.delete({
-        where: {
-          id: bookId,
-        },
-      }),
-    ]);
+    await prisma.book.delete({
+      where: {
+        id: bookId,
+      },
+    });
 
     return res.status(200).end();
   } catch (error) {

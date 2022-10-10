@@ -21,13 +21,26 @@
 
 .book {
   width: 400px;
+  position: relative;
   border: 1px solid #000000;
   border-radius: 8px;
   padding: 12px;
   text-align: center;
-  margin: 0 auto;
+  margin-left: 12px;
   cursor: pointer;
   @media screen and (max-width: 420px) {
     width: 80%;
   }
+}
+
+.delete {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.bookWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 }
