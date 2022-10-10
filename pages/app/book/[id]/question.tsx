@@ -5,7 +5,7 @@ import { CircularProgress } from "@mui/material";
 import { Word } from "@prisma/client";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useSWR from "swr";
 import styles from "./question.module.scss";
 
@@ -17,13 +17,15 @@ const QuestionPage = () => {
   const [index, setIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isMeaning, setIsMeaning] = useState<boolean>(false);
-  const [currentWord, setCurrentWord] = useState<Word>();
+  const [stateWords, setStateWords] = useState<Word[]>([]);
   const router = useRouter();
   const { id: bookId } = router.query;
   const { data } = useSWR<Data>(
     bookId && `/api/word?bookId=${bookId}`,
     fetcher
   );
+
+  if (data?.words.length && !stateWords?.length) setStateWords(data.words);
 
   const getCorrectRate = (word: Word) => {
     const rate = word.correct! / word.answers!;
@@ -37,13 +39,8 @@ const QuestionPage = () => {
       })
     : [];
 
-  useEffect(() => {
-    if (words?.length) setCurrentWord(words[0]);
-  }, [words]);
-
   const onNext = () => {
     setIsMeaning(false);
-    setCurrentWord(words[index + 1]);
     setIndex((prev) => prev + 1);
   };
 
@@ -55,9 +52,9 @@ const QuestionPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        wordId: words[index].id,
-        answers: words[index].answers ? words[index].answers! + 1 : 1,
-        correct: words[index].correct ? words[index].correct! + 1 : 1,
+        wordId: stateWords[index].id,
+        answers: stateWords[index].answers ? stateWords[index].answers! + 1 : 1,
+        correct: stateWords[index].correct ? stateWords[index].correct! + 1 : 1,
       }),
     });
     setIsLoading(false);
@@ -72,9 +69,9 @@ const QuestionPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        wordId: words[index].id,
-        answers: words[index].answers ? words[index].answers! + 1 : 1,
-        correct: words[index].correct ?? 0,
+        wordId: stateWords[index].id,
+        answers: stateWords[index].answers ? stateWords[index].answers! + 1 : 1,
+        correct: stateWords[index].correct ?? 0,
       }),
     });
     setIsLoading(false);
@@ -90,7 +87,7 @@ const QuestionPage = () => {
           </p>
           {isMeaning ? (
             <>
-              <p className={styles.word}>{currentWord?.meaning}</p>
+              <p className={styles.word}>{stateWords[index]?.meaning}</p>
               <div className={clsx(styles.buttonWrapper, "flex-col")}>
                 {words?.length && index + 1 < words.length ? (
                   <div className={styles.button} onClick={onNext}>
@@ -114,7 +111,7 @@ const QuestionPage = () => {
             </>
           ) : (
             <>
-              <p className={styles.word}>{currentWord?.word}</p>
+              <p className={styles.word}>{stateWords[index]?.word}</p>
               <div className={styles.buttonWrapper}>
                 <div className={styles.button} onClick={() => onCorrect()}>
                   わかった
