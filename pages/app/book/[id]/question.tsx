@@ -118,6 +118,7 @@ const QuestionPage = () => {
                   わからない
                 </div>
               </div>
+              {words.map((n) => `${n.word},${n.meaning}`)}
             </>
           )}
         </div>
