@@ -100,10 +100,9 @@ export default function SiteIndex() {
                 />
               </div>
               <div className="border border-gray-700">
-                <textarea
+                <input
                   className="w-full px-5 py-3 text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-r-lg placeholder-gray-400"
                   placeholder="意味"
-                  rows={3}
                   {...register("meaning", { required: true })}
                 />
               </div>
