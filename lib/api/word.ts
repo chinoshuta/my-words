@@ -2,7 +2,6 @@ import prisma from "@/lib/prisma";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { Word } from ".prisma/client";
-import type { Session } from "next-auth";
 
 export async function getWord(
   req: NextApiRequest,

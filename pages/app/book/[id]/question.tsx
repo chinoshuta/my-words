@@ -104,7 +104,7 @@ const QuestionPage = () => {
                 )}
                 <div
                   className={styles.button}
-                  onClick={() => router.push(`/book/${bookId}`)}
+                  onClick={() => location.reload()}
                 >
                   単語帳に戻る
                 </div>
