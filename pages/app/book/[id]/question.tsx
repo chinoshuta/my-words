@@ -25,15 +25,15 @@ const QuestionPage = () => {
     fetcher
   );
 
-  if (data?.words.length && !stateWords?.length) setStateWords(data.words);
+  if (data?.words.length && stateWords?.length === 0) setStateWords(data.words);
 
   const getCorrectRate = (word: Word) => {
     const rate = word.correct! / word.answers!;
     return rate ?? 0;
   };
 
-  const words: Array<Word> = data?.words
-    ? data.words.sort((a, b) => {
+  const words: Array<Word> = stateWords
+    ? stateWords.sort((a, b) => {
         if (getCorrectRate(a) > getCorrectRate(b)) return 1;
         return -1;
       })
@@ -41,7 +41,7 @@ const QuestionPage = () => {
 
   const onNext = () => {
     setIsMeaning(false);
-    console.log(stateWords);
+    console.log(words);
     setIndex((prev) => prev + 1);
   };
 
@@ -53,9 +53,9 @@ const QuestionPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        wordId: stateWords[index].id,
-        answers: stateWords[index].answers ? stateWords[index].answers! + 1 : 1,
-        correct: stateWords[index].correct ? stateWords[index].correct! + 1 : 1,
+        wordId: words[index].id,
+        answers: words[index].answers ? words[index].answers! + 1 : 1,
+        correct: words[index].correct ? words[index].correct! + 1 : 1,
       }),
     });
     setIsLoading(false);
@@ -70,9 +70,9 @@ const QuestionPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        wordId: stateWords[index].id,
-        answers: stateWords[index].answers ? stateWords[index].answers! + 1 : 1,
-        correct: stateWords[index].correct ?? 0,
+        wordId: words[index].id,
+        answers: words[index].answers ? words[index].answers! + 1 : 1,
+        correct: words[index].correct ?? 0,
       }),
     });
     setIsLoading(false);
@@ -88,7 +88,7 @@ const QuestionPage = () => {
           </p>
           {isMeaning ? (
             <>
-              <p className={styles.word}>{stateWords[index]?.meaning}</p>
+              <p className={styles.word}>{words[index]?.meaning}</p>
               <div className={clsx(styles.buttonWrapper, "flex-col")}>
                 {words?.length && index + 1 < words.length ? (
                   <div className={styles.button} onClick={onNext}>
@@ -112,7 +112,7 @@ const QuestionPage = () => {
             </>
           ) : (
             <>
-              <p className={styles.word}>{stateWords[index]?.word}</p>
+              <p className={styles.word}>{words[index]?.word}</p>
               <div className={styles.buttonWrapper}>
                 <div className={styles.button} onClick={() => onCorrect()}>
                   わかった

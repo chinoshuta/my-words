@@ -1,6 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
-import TwitterProvider from "next-auth/providers/twitter";
+import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 
@@ -22,10 +22,18 @@ export const authOptions: NextAuthOptions = {
         };
       },
     }),
-    TwitterProvider({
-      clientId: "OGQ1NU9YM0RQZHB0N3h6bHZ1Rzk6MTpjaQ",
-      clientSecret: "rs3eA3poKWipCj7YY4LX6PPNztD5gI4IGowT5kbww8CRL9SMKK",
+    GoogleProvider({
+      clientId: process.env.Google_CLIENT_ID!,
+      clientSecret: process.env.Google_CLIENT_SECRET!,
       version: "2.0",
+      profile(profile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name || profile.login,
+          gh_username: profile.login,
+          email: profile.email,
+        };
+      },
     }),
   ],
   pages: {
