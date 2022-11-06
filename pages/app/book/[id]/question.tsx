@@ -20,23 +20,26 @@ const QuestionPage = () => {
   const [stateWords, setStateWords] = useState<Word[]>([]);
   const router = useRouter();
   const { id: bookId } = router.query;
-  const { data } = useSWR<Data>(
-    bookId && `/api/word?bookId=${bookId}`,
-    fetcher
-  );
-
-  if (data?.words.length && stateWords?.length === 0) setStateWords(data.words);
 
   useEffect(() => {
-    mutate(`/api/word?bookId=${bookId}`);
+    setIsLoading(true);
+    fetch(`/api/word?bookId=${bookId}`, {
+      method: HttpMethod.GET,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setStateWords(data.words));
+    setIsLoading(false);
   }, [bookId]);
 
-  useEffect(() => {
-    console.log(isMeaning ? "解答" : "単語");
-    console.log(`番号${index + 1}`);
-    console.log(words[index]);
-    console.log(words);
-  }, [isMeaning]);
+  // useEffect(() => {
+  //   console.log(isMeaning ? "解答" : "単語");
+  //   console.log(`番号${index + 1}`);
+  //   console.log(words[index]);
+  //   console.log(words);
+  // }, [isMeaning]);
 
   const getCorrectRate = (word: Word) => {
     const rate = word.correct! / word.answers!;
@@ -87,7 +90,7 @@ const QuestionPage = () => {
 
   return (
     <Layout>
-      {data && !isLoading ? (
+      {!isLoading ? (
         <div className={styles.container}>
           <p className={styles.index}>
             {index + 1}/{words?.length}
