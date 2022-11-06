@@ -30,8 +30,8 @@ const QuestionPage = () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => setStateWords(data.words));
-    setIsLoading(false);
+      .then((data) => setStateWords(data.words))
+      .finally(() => setIsLoading(false));
   }, [bookId]);
 
   // useEffect(() => {
@@ -46,13 +46,12 @@ const QuestionPage = () => {
     return rate ?? 0;
   };
 
-  const words: Array<Word> = stateWords;
-  // const words: Array<Word> = stateWords
-  //   ? stateWords.sort((a, b) => {
-  //       if (getCorrectRate(a) > getCorrectRate(b)) return 1;
-  //       return -1;
-  //     })
-  //   : [];
+  const words: Array<Word> = stateWords?.length
+    ? stateWords.slice().sort((a, b) => {
+        if (getCorrectRate(a) > getCorrectRate(b)) return 1;
+        return -1;
+      })
+    : [];
 
   const onNext = () => {
     setIsMeaning(false);
