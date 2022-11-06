@@ -25,9 +25,9 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.Google_CLIENT_ID!,
       clientSecret: process.env.Google_CLIENT_SECRET!,
-      profile() {
+      profile(profile) {
         return {
-          id: Date.now().toString(),
+          id: profile.id.toString(),
           name: "mywords",
           gh_username: "mywords",
           email: "nnn@nnn.com",
