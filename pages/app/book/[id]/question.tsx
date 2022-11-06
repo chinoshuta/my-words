@@ -31,6 +31,12 @@ const QuestionPage = () => {
     mutate(`/api/word?bookId=${bookId}`);
   }, [bookId]);
 
+  useEffect(() => {
+    console.log(isMeaning ? "解答" : "単語");
+    console.log(`番号${index + 1}`);
+    console.log(words[index]);
+  }, [isMeaning]);
+
   const getCorrectRate = (word: Word) => {
     const rate = word.correct! / word.answers!;
     return rate ?? 0;
