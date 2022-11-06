@@ -5,8 +5,8 @@ import { CircularProgress } from "@mui/material";
 import { Word } from "@prisma/client";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import useSWR from "swr";
+import { useEffect, useState } from "react";
+import useSWR, { mutate } from "swr";
 import styles from "./question.module.scss";
 
 type Data = {
@@ -26,6 +26,10 @@ const QuestionPage = () => {
   );
 
   if (data?.words.length && stateWords?.length === 0) setStateWords(data.words);
+
+  useEffect(() => {
+    mutate(`/api/word?bookId=${bookId}`);
+  }, [bookId]);
 
   const getCorrectRate = (word: Word) => {
     const rate = word.correct! / word.answers!;
