@@ -60,21 +60,17 @@ export default function Login() {
         </div>
 
         <div className={styles.buttonWrapper}>
-          {/* <button
+          <button
             disabled={loading}
             onClick={() => {
               setLoading(true);
-              signIn("twitter");
+              signIn("google");
             }}
             className={styles.button}
           >
-            <img
-              src="/twitter-icon.png"
-              alt="twitter"
-              className={styles.icon}
-            />
-            <span className="font-bold">Twitter</span>でログイン
-          </button> */}
+            <img src="/google-icon.png" alt="google" className={styles.icon} />
+            <span className="font-bold">Google</span>でログイン
+          </button>
           <button
             disabled={loading}
             onClick={() => {

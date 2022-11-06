@@ -25,15 +25,14 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.Google_CLIENT_ID!,
       clientSecret: process.env.Google_CLIENT_SECRET!,
-      version: "2.0",
-      profile(profile) {
-        return {
-          id: profile.id.toString(),
-          name: profile.name || profile.login,
-          gh_username: profile.login,
-          email: profile.email,
-        };
-      },
+      // profile(profile) {
+      //   return {
+      //     id: profile.id.toString(),
+      //     name: profile.name || profile.login,
+      //     gh_username: profile.login,
+      //     email: profile.email,
+      //   };
+      // },
     }),
   ],
   pages: {
