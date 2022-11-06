@@ -4,8 +4,13 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 
-if (!process.env.GITHUB_ID || !process.env.GITHUB_SECRET)
-  throw new Error("Failed to initialize Github authentication");
+if (
+  !process.env.GITHUB_ID ||
+  !process.env.GITHUB_SECRET ||
+  !process.env.Google_CLIENT_ID ||
+  !process.env.Google_CLIENT_SECRET
+)
+  throw new Error("Failed to initialize authentication");
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -23,8 +28,8 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     GoogleProvider({
-      clientId: process.env.Google_CLIENT_ID!,
-      clientSecret: process.env.Google_CLIENT_SECRET!,
+      clientId: process.env.Google_CLIENT_ID,
+      clientSecret: process.env.Google_CLIENT_SECRET,
       profile(profile) {
         return {
           id: profile.id.toString(),
