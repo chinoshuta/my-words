@@ -28,9 +28,9 @@ export const authOptions: NextAuthOptions = {
       profile() {
         return {
           id: Date.now().toString(),
-          name: "",
-          gh_username: "",
-          email: "",
+          name: "mywords",
+          gh_username: "mywords",
+          email: "nnn@nnn.com",
         };
       },
     }),
