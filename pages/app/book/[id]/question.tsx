@@ -46,12 +46,13 @@ const QuestionPage = () => {
     return rate ?? 0;
   };
 
-  const words: Array<Word> = stateWords
-    ? stateWords.sort((a, b) => {
-        if (getCorrectRate(a) > getCorrectRate(b)) return 1;
-        return -1;
-      })
-    : [];
+  const words: Array<Word> = stateWords;
+  // const words: Array<Word> = stateWords
+  //   ? stateWords.sort((a, b) => {
+  //       if (getCorrectRate(a) > getCorrectRate(b)) return 1;
+  //       return -1;
+  //     })
+  //   : [];
 
   const onNext = () => {
     setIsMeaning(false);
