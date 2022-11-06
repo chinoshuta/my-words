@@ -1,17 +1,11 @@
 import Layout from "@/components/app/Layout";
-import fetcher from "@/lib/fetcher";
 import { HttpMethod } from "@/types";
 import { CircularProgress } from "@mui/material";
 import { Word } from "@prisma/client";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import useSWR, { mutate } from "swr";
 import styles from "./question.module.scss";
-
-type Data = {
-  words: Array<Word>;
-};
 
 const QuestionPage = () => {
   const [index, setIndex] = useState<number>(0);
@@ -20,6 +14,11 @@ const QuestionPage = () => {
   const [stateWords, setStateWords] = useState<Word[]>([]);
   const router = useRouter();
   const { id: bookId } = router.query;
+
+  const getCorrectRate = (word: Word) => {
+    const rate = word.correct! / word.answers!;
+    return rate ?? 0;
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -40,11 +39,6 @@ const QuestionPage = () => {
   //   console.log(words[index]);
   //   console.log(words);
   // }, [isMeaning]);
-
-  const getCorrectRate = (word: Word) => {
-    const rate = word.correct! / word.answers!;
-    return rate ?? 0;
-  };
 
   const words: Array<Word> = stateWords?.length
     ? stateWords.slice().sort((a, b) => {

@@ -17,8 +17,7 @@ interface LayoutProps extends WithChildren {
 
 export default function Layout({ siteId, children }: LayoutProps) {
   const title = "My Words";
-  const description =
-    "Create a fullstack application with multi-tenancy and custom domains support using Next.js, Prisma, and PostgreSQL";
+  const description = "自分だけの単語帳を作成";
   const logo = "/favicon.ico";
 
   const session = useRequireAuth();
