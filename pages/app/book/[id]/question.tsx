@@ -46,8 +46,7 @@ const QuestionPage = () => {
   };
 
   const onCorrect = async () => {
-    setIsLoading(true);
-    await fetch(`/api/word`, {
+    fetch(`/api/word`, {
       method: HttpMethod.PUT,
       headers: {
         "Content-Type": "application/json",
@@ -58,13 +57,11 @@ const QuestionPage = () => {
         correct: words[index].correct ? words[index].correct! + 1 : 1,
       }),
     });
-    setIsLoading(false);
     setIsMeaning(true);
   };
 
   const onMistake = async () => {
-    setIsLoading(true);
-    await fetch(`/api/word`, {
+    fetch(`/api/word`, {
       method: HttpMethod.PUT,
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +72,6 @@ const QuestionPage = () => {
         correct: words[index].correct ?? 0,
       }),
     });
-    setIsLoading(false);
     setIsMeaning(true);
   };
 
