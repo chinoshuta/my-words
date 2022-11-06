@@ -51,7 +51,6 @@ const QuestionPage = () => {
 
   const onNext = () => {
     setIsMeaning(false);
-    console.log(words);
     setIndex((prev) => prev + 1);
   };
 
