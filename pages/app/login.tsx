@@ -60,7 +60,7 @@ export default function Login() {
         </div>
 
         <div className={styles.buttonWrapper}>
-          <button
+          {/* <button
             disabled={loading}
             onClick={() => {
               setLoading(true);
@@ -70,7 +70,7 @@ export default function Login() {
           >
             <img src="/google-icon.png" alt="google" className={styles.icon} />
             <span className="font-bold">Google</span>でログイン
-          </button>
+          </button> */}
           <button
             disabled={loading}
             onClick={() => {
