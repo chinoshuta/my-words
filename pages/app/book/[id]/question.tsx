@@ -20,6 +20,15 @@ const QuestionPage = () => {
     return rate ?? 0;
   };
 
+  const getSortWords = (words: Word[]): Word[] => {
+    return words?.length
+      ? words.slice().sort((a, b) => {
+          if (getCorrectRate(a) > getCorrectRate(b)) return 1;
+          return -1;
+        })
+      : [];
+  };
+
   useEffect(() => {
     setIsLoading(true);
     fetch(`/api/word?bookId=${bookId}`, {
@@ -29,7 +38,7 @@ const QuestionPage = () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => setStateWords(data.words))
+      .then((data) => setStateWords(getSortWords(data.words)))
       .finally(() => setIsLoading(false));
   }, [bookId]);
 
@@ -40,46 +49,43 @@ const QuestionPage = () => {
   //   console.log(words);
   // }, [isMeaning]);
 
-  const words: Array<Word> = stateWords?.length
-    ? stateWords.slice().sort((a, b) => {
-        if (getCorrectRate(a) > getCorrectRate(b)) return 1;
-        return -1;
-      })
-    : [];
-
   const onNext = () => {
     setIsMeaning(false);
     setIndex((prev) => prev + 1);
   };
 
   const onCorrect = async () => {
-    fetch(`/api/word`, {
+    setIsLoading(true);
+    await fetch(`/api/word`, {
       method: HttpMethod.PUT,
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        wordId: words[index].id,
-        answers: words[index].answers ? words[index].answers! + 1 : 1,
-        correct: words[index].correct ? words[index].correct! + 1 : 1,
+        wordId: stateWords[index].id,
+        answers: stateWords[index].answers ? stateWords[index].answers! + 1 : 1,
+        correct: stateWords[index].correct ? stateWords[index].correct! + 1 : 1,
       }),
     });
     setIsMeaning(true);
+    setIsLoading(false);
   };
 
   const onMistake = async () => {
-    fetch(`/api/word`, {
+    setIsLoading(true);
+    await fetch(`/api/word`, {
       method: HttpMethod.PUT,
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        wordId: words[index].id,
-        answers: words[index].answers ? words[index].answers! + 1 : 1,
-        correct: words[index].correct ?? 0,
+        wordId: stateWords[index].id,
+        answers: stateWords[index].answers ? stateWords[index].answers! + 1 : 1,
+        correct: stateWords[index].correct ?? 0,
       }),
     });
     setIsMeaning(true);
+    setIsLoading(false);
   };
 
   return (
@@ -87,13 +93,13 @@ const QuestionPage = () => {
       {!isLoading ? (
         <div className={styles.container}>
           <p className={styles.index}>
-            {index + 1}/{words?.length}
+            {index + 1}/{stateWords?.length}
           </p>
           {isMeaning ? (
             <>
-              <p className={styles.word}>{words[index]?.meaning}</p>
+              <p className={styles.word}>{stateWords[index]?.meaning}</p>
               <div className={clsx(styles.buttonWrapper, "flex-col")}>
-                {words?.length && index + 1 < words.length ? (
+                {stateWords?.length && index + 1 < stateWords.length ? (
                   <div className={styles.button} onClick={onNext}>
                     次の単語へ
                   </div>
@@ -115,7 +121,7 @@ const QuestionPage = () => {
             </>
           ) : (
             <>
-              <p className={styles.word}>{words[index]?.word}</p>
+              <p className={styles.word}>{stateWords[index]?.word}</p>
               <div className={styles.buttonWrapper}>
                 <div className={styles.button} onClick={() => onCorrect()}>
                   わかった
