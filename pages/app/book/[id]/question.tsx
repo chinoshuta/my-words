@@ -35,6 +35,7 @@ const QuestionPage = () => {
     console.log(isMeaning ? "解答" : "単語");
     console.log(`番号${index + 1}`);
     console.log(words[index]);
+    console.log(words);
   }, [isMeaning]);
 
   const getCorrectRate = (word: Word) => {
